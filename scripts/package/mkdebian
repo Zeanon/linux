@@ -217,9 +217,8 @@ Homepage: https://www.kernel.org/
 
 Package: $packagename-${KERNELRELEASE}
 Architecture: $debarch
-Description: Linux kernel, version ${KERNELRELEASE}
- This package contains the Linux kernel, modules and corresponding other
- files, version: ${KERNELRELEASE}.
+Description: Linux 7.2.0-rc6 for MSI Prestige 16 Flip AI+ C3MTG
+ The Linux kernel 7.2.0-rc6 and modules for use on the MSI Prestige 16 Flip AI+ C3MTG.
 EOF
 
 if [ "${SRCARCH}" != um ]; then
@@ -241,10 +240,13 @@ cat <<EOF >> debian/control
 Package: linux-headers-${KERNELRELEASE}
 Architecture: $debarch
 Build-Profiles: <!pkg.${sourcename}.nokernelheaders>
-Description: Linux kernel headers for ${KERNELRELEASE} on $debarch
- This package provides kernel header files for ${KERNELRELEASE} on $debarch
- .
- This is useful for people who need to build external modules
+Description: Linux 7.2.0-rc6 for MSI Prestige 16 Flip AI+ C3MTG (module development)
+ This package provides the architecture-specific kernel header files for
+ Linux kernel 7.2.0-rc6-prestige-16-c3m+deb14, generally used for building out-of-tree
+ kernel modules.  These files are going to be installed into
+ /usr/src/linux-headers-7.2.0-rc6-prestige-16-c3m+deb14, and can be used for building
+ modules that load into the kernel provided by the
+ linux-image-7.2.0-rc6-prestige-16-c3m+deb14 package.
 EOF
 fi
 fi
