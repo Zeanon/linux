@@ -2109,13 +2109,28 @@ static struct hid_input *hidinput_allocate(struct hid_device *hid,
 		}
 	}
 
+	if (strcmp(hid->name, "CUST0000:00 04F3:4516") == 0) {
+		strscpy(hid->name, "Internal Touchscreen", sizeof(hid->name) / sizeof(hid->name[0]));
+	}
+
+	if (strcmp(hid->name, "SYNA1514:00 06CB:D022") == 0) {
+		strscpy(hid->name, "MSI Action Touchpad", sizeof(hid->name) / sizeof(hid->name[0]));
+	}
+
 	if (suffix) {
 		name_len = strlen(hid->name);
 		suffix_len = strlen(suffix);
 		if ((name_len < suffix_len) ||
 		    strcmp(hid->name + name_len - suffix_len, suffix)) {
-			hidinput->name = kasprintf(GFP_KERNEL, "%s %s",
-						   hid->name, suffix);
+			if (application == HID_DG_PEN && strcmp(hid->name, "Internal Touchscreen") == 0) {
+				hidinput->name = "MSI Nano Pen";
+			} else if (application == HID_GD_MOUSE && strcmp(hid->name, "MSI Action Touchpad") == 0) {
+				hidinput->name = "Internal Touchpad Mouse";
+			} else {
+				hidinput->name = kasprintf(GFP_KERNEL, "%s %s",
+				                           hid->name, suffix);
+			}
+
 			if (!hidinput->name)
 				goto fail;
 		}
