@@ -1170,7 +1170,8 @@ struct snd_soc_pcm_runtime {
 
 	/* CPU/Codec/Platform */
 	int num_components;
-	struct snd_soc_component *components[] __counted_by(num_components);
+	unsigned int num_components_allocated;
+	struct snd_soc_component *components[] __counted_by(num_components_allocated);
 };
 
 /* see soc_new_pcm_runtime()  */

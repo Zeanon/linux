@@ -223,7 +223,11 @@ static int snd_soc_rtd_add_component(struct snd_soc_pcm_runtime *rtd,
 	}
 
 	/* see for_each_rtd_components */
-	rtd->num_components++; // increment flex array count at first
+	if (WARN_ON(rtd->num_components >= rtd->num_components_allocated))
+			return -EINVAL;
+
+	/* Track the number of components actually added */
+	rtd->num_components++;
 	rtd->components[rtd->num_components - 1] = component;
 
 	return 0;
